@@ -1,0 +1,31 @@
+_BASE_: config.yaml
+MODEL:
+  SEM_SEG_HEAD:
+    IN_FEATURES: ["res2", "res3", "res4"]
+    NUM_CLASSES: 40
+    TRAIN_CLASS_JSON: "datasets/landdiscover.json"
+    TEST_CLASS_JSON: "datasets/landdiscover.json"
+    DECODER_CLIP_GUIDANCE_DIMS: [256, 128]
+    DECODER_CLIP_GUIDANCE_PROJ_DIMS: [32, 16]
+
+    SAM3_PROMPT_MODE: "auto_geometry"
+    SAM3_GEOMETRY_MAX_PROMPTS: 32
+    PROPOSAL_MAX_NUM: 32
+    PROPOSAL_MIN_AREA: 32
+
+    NODE_PSEUDO_WEIGHT: 0.25
+    ENABLE_NODE_PSEUDO_LOSS: True
+    NODE_PSEUDO_START_EPOCH: 5
+  PROMPT_ENSEMBLE_TYPE: "remote_sensing"
+
+DATASETS:
+  TRAIN: ("LandDiscover_50K_full_train_sem_seg",)
+  TEST: ()
+
+SOLVER:
+  IMS_PER_BATCH: 2
+  MAX_ITER: 30000
+  BACKBONE_MULTIPLIER: 0.0
+
+TEST:
+  EVAL_PERIOD: 0
